@@ -42,10 +42,10 @@ public class kliklijst extends JFrame {
             frameHoogte = gd.getDisplayMode().getHeight();
             frameBreedte = gd.getDisplayMode().getWidth();
             diaFrame.setSize(frameBreedte, frameHoogte);
-            
-            
-            
-            
+
+
+
+
         } else {
             //er is mar 1 scherm
             GraphicsDevice gd = gs[0];
@@ -59,7 +59,7 @@ public class kliklijst extends JFrame {
 //                diaFrame.setBackground(Color.BLACK);
         diaFrame.getContentPane().setBackground(Color.BLACK);
         diaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                                diaFrame.addMouseListener(new clickListener());
+        diaFrame.addMouseListener(new clickListener());
 
         System.out.println(frameBreedte);
         System.out.println(frameHoogte);
@@ -99,9 +99,9 @@ public class kliklijst extends JFrame {
 
 
         File filedefault = readVorigeFileKeuze();
-        
-        
-        
+
+
+
 
 
 //                new File("/Users/gerard1/Pictures/oudeMotorToertocht2012/12aug2017");
@@ -150,27 +150,36 @@ public class kliklijst extends JFrame {
                             jp.add(label);
                             prefix = file.getName().substring(0, 3);
                         }
+                        try {
+                            image = ImageIO.read(file);
+//try {
+//}
 
-                        image = ImageIO.read(file);
-//                    int hoogte = image.getHeight(jb);
+
+                            //                    int hoogte = image.getHeight(jb);
 //                    if (hoogte > 100) 
-                        ia = new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+                            ia = new ImageIcon(image.getScaledInstance(100, 100, Image.SCALE_DEFAULT));
 //                        jb = new myButton("", ia);
-                        jb = new myButton();
-                        jb.setIcon(ia);
-                        jb.setLeftFile(file);
-                        jb.addMouseListener(new MuisVoeler());
+                            jb = new myButton();
+                            jb.setIcon(ia);
+                            jb.setLeftFile(file);
+                            jb.addMouseListener(new MuisVoeler());
 
-                        jb.setPreferredSize(new Dimension(ia.getIconWidth(), ia.getIconHeight()));
-                        jp.add(jb);
+                            jb.setPreferredSize(new Dimension(ia.getIconWidth(), ia.getIconHeight()));
+                            jp.add(jb);
+                        } catch (javax.imageio.IIOException iio) {
+
+                            System.out.println("Dit is geen geldig image." + file.getName());
+
+                        }
                     }
                 }
-            }
 
-            JScrollPane metSchuif = new JScrollPane(jp);
-            metSchuif.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            metSchuif.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            window.add(metSchuif);
+                JScrollPane metSchuif = new JScrollPane(jp);
+                metSchuif.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                metSchuif.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                window.add(metSchuif);
+            }
         }
     }
 
@@ -282,8 +291,8 @@ public class kliklijst extends JFrame {
 
 //        setVisible(false); //you can't see me!
 //        skipnumaardez = Boolean.FALSE;
-                System.out.println(" Disposing Diaframe");
-            
+            System.out.println(" Disposing Diaframe");
+
             diaFrame.dispose(); //Destroy the JFrame object
         }
     }
